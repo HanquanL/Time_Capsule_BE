@@ -27,6 +27,10 @@ public class User {
     @NotBlank(message = "Email is required")
     private String email;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "sub_time_capsule_id", referencedColumnName = "id")
+    private SubTimeCapsule subTimeCapsule;
+
     private Instant created;
     private boolean enabled;
 

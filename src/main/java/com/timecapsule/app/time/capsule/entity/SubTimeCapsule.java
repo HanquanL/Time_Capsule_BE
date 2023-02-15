@@ -23,7 +23,7 @@ public class SubTimeCapsule {
     @Column(nullable = false)
     private String description;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "subTimeCapsule", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private User user;
 
     @OneToMany(mappedBy = "subTimeCapsule", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
