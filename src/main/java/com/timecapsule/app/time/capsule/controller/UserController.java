@@ -2,6 +2,7 @@ package com.timecapsule.app.time.capsule.controller;
 
 import com.timecapsule.app.time.capsule.dto.MessageResponse;
 import com.timecapsule.app.time.capsule.entity.User;
+import com.timecapsule.app.time.capsule.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
