@@ -23,7 +23,7 @@ public class UserController {
     @Autowired
     private PasswordEncoder encoder; // declare the encoder field
 
-    @PostMapping("/register")
+    @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest){
         if(userService.existsByUsername(signupRequest.getUsername())){
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Usernme is already taken!"));
