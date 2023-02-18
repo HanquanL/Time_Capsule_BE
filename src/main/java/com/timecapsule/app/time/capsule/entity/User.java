@@ -1,6 +1,7 @@
 package com.timecapsule.app.time.capsule.entity;
 
-import jakarta.persistence.*;
+
+import javax.persistence.*;
 import javax.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
