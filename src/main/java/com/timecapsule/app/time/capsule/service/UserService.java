@@ -12,7 +12,7 @@ import java.util.List;
 public interface UserService {
 
     User registerUser(SignupRequest signupRequest);
-    User updateUser(User user);
+    void updateUser(User user);
     User getUserById(Long id);
     List<User> getAllUsers();
     void deleteUser(Long id);
