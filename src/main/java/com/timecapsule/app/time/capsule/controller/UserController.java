@@ -1,6 +1,7 @@
 package com.timecapsule.app.time.capsule.controller;
 
 import com.timecapsule.app.time.capsule.dto.MessageResponse;
+import com.timecapsule.app.time.capsule.dto.SignupRequest;
 import com.timecapsule.app.time.capsule.entity.User;
 import com.timecapsule.app.time.capsule.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +25,14 @@ public class UserController {
         if(userService.existsByUsername(signupRequest.getUsername())){
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Usernme is already taken!"));
         }
-        if (userService.existsByEmail(signUpRequest.getEmail())) {
+        if (userService.existsByEmail(signupRequest.getEmail())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
         }
 
         // Create new user's account
-        User user = new User(signUpRequest.getUsername(),
-                signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()));
+        User user = new User(signupRequest.getUsername(),
+                signupRequest.getEmail(),
+                encoder.encode(signupRequest.getPassword()));
 
         userService.createUser(user);
 
