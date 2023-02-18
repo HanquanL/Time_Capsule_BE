@@ -7,10 +7,12 @@ import com.timecapsule.app.time.capsule.exception.ResourceNotFoundException;
 import com.timecapsule.app.time.capsule.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.io.PrintWriter;
 import java.util.List;
 
+@Service
 public class UserServiceImpl implements UserService{
 
     @Autowired
@@ -57,6 +59,27 @@ public class UserServiceImpl implements UserService{
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
         userRepository.delete(user);
+    }
+
+    @Override
+    public User createUser(User user) {
+        if (existsByUsername(user.getUsername())) {
+            throw new BadRequestException("Username is already taken");
+        }
+        if (existsByEmail(user.getEmail())) {
+            throw new BadRequestException("Email is already in use");
+        }
+        return userRepository.save(user);
+    }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 
 }
