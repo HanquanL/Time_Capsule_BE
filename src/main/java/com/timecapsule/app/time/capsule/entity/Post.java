@@ -32,6 +32,8 @@ public class Post {
 
     private Instant createdDate;
 
+    private Instant updatedOn;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", referencedColumnName = "id")
     private User user;
