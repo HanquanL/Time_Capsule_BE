@@ -15,7 +15,7 @@ import java.util.List;
 @Builder
 public class SubTimeCapsule {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "Community name is required")
     private String name;

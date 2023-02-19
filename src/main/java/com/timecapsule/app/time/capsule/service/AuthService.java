@@ -4,6 +4,7 @@ import com.timecapsule.app.time.capsule.dto.SignupRequest;
 import com.timecapsule.app.time.capsule.entity.NotificationEmail;
 import com.timecapsule.app.time.capsule.entity.User;
 import com.timecapsule.app.time.capsule.entity.VerificationToken;
+import com.timecapsule.app.time.capsule.exception.SpringTimeCapsuleException;
 import com.timecapsule.app.time.capsule.repository.UserRepository;
 import com.timecapsule.app.time.capsule.repository.VerificationTokenRepository;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import static java.time.Instant.now;
@@ -48,6 +50,19 @@ public class AuthService {
         verificationToken.setUser(user);
         verificationTokenRepository.save(verificationToken);
         return token;
+    }
+
+    public void verifyAccount(String token){
+        Optional<VerificationToken> verificationTokenOptional = verificationTokenRepository.findByToken(token);
+        verificationTokenOptional.orElseThrow(() -> new SpringTimeCapsuleException("Invalid Token"));
+        fetchUserAndEnable(verificationTokenOptional.get());
+    }
+    @Transactional
+    private void fetchUserAndEnable(VerificationToken verificationToken) {
+        String username = verificationToken.getUser().getUsername();
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new SpringTimeCapsuleException("User Not Found with id - " + username));
+        user.setEnabled(true);
+        userRepository.save(user);
     }
 
     private String encodePassword(String password) {
