@@ -44,11 +44,6 @@ public class Post {
     @JoinColumn(name = "id", referencedColumnName = "id")
     private SubTimeCapsule subTimeCapsule;
 
-    public Post(String title, String content, User user) {
-        this.title = title;
-        this.content = content;
-        this.user = user;
-        this.createdDate = Instant.now();
-    }
+
 
 }
