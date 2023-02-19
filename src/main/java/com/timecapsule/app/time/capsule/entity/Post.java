@@ -41,7 +41,7 @@ public class Post {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", referencedColumnName = "id")
+    @JoinColumn(name = "subTimeCapsuleId", referencedColumnName = "id")
     private SubTimeCapsule subTimeCapsule;
 
 
