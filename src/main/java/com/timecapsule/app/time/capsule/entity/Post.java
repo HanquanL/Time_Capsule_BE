@@ -36,9 +36,7 @@ public class Post {
     @JoinColumn(name = "userId", referencedColumnName = "id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sub_time_capsule_id", nullable = false)
-    private SubTimeCapsule subTimeCapsule;
+
 
     private Integer voteCount = 0;
 
