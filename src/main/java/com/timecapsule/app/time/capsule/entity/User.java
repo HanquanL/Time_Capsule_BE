@@ -18,7 +18,7 @@ import java.time.Instant;
 @NoArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @NotBlank(message = "Username is required")
     @Size(min = 3, max = 20)

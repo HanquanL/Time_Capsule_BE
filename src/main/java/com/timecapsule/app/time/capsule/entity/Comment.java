@@ -18,7 +18,7 @@ import java.util.List;
 public class Comment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(nullable = false)
@@ -36,9 +36,4 @@ public class Comment {
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comment> replies = new ArrayList<>();
 
-    public Comment(String text, User user, Post post) {
-        this.text = text;
-        this.user = user;
-        this.post = post;
-    }
 }

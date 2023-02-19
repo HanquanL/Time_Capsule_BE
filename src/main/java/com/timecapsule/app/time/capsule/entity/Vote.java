@@ -13,21 +13,18 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Vote {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(nullable = false)
-    private boolean upvote;
+    private VoteType voteType;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId", referencedColumnName = "id")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "postId", referencedColumnName = "id")
     private Post post;
 
-    public Vote(boolean upvote, User user, Post post) {
-        this.upvote = upvote;
-        this.user = user;
-        this.post = post;
-    }
+
 }

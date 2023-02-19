@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -19,17 +20,18 @@ import java.time.Instant;
 @NoArgsConstructor
 public class Post {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @NotBlank
     @Size(min = 3, max = 100)
     private String title;
-
+    @Nullable
+    private String url;
     @Lob
     @NotBlank
     private String content;
-
+    private Integer voteCount;
     private Instant createdDate;
 
     private Instant updatedOn;
@@ -38,9 +40,9 @@ public class Post {
     @JoinColumn(name = "userId", referencedColumnName = "id")
     private User user;
 
-
-
-    private Integer voteCount = 0;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id", referencedColumnName = "id")
+    private SubTimeCapsule subTimeCapsule;
 
     public Post(String title, String content, User user) {
         this.title = title;
