@@ -29,4 +29,6 @@ public class AuthController {
        authService.signup(signupRequest);
        return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
 }

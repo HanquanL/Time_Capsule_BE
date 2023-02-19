@@ -1,6 +1,7 @@
 package com.timecapsule.app.time.capsule.service;
 
 import com.timecapsule.app.time.capsule.dto.SignupRequest;
+import com.timecapsule.app.time.capsule.entity.NotificationEmail;
 import com.timecapsule.app.time.capsule.entity.User;
 import com.timecapsule.app.time.capsule.entity.VerificationToken;
 import com.timecapsule.app.time.capsule.repository.UserRepository;
@@ -23,6 +24,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final MailBuilder mailBuilder;
+    private final MailService mailService;
 
     @Transactional
     public void signup(SignupRequest signupRequest) {
@@ -36,6 +38,7 @@ public class AuthService {
         userRepository.save(user);
         String token = generateVerificationToken(user);
         String message = mailBuilder.build("http://localhost:8080/api/auth/accountVerification" + "/" + token);
+        mailService.sendMail(new NotificationEmail("Please Activate your account", user.getEmail(), message));
     }
 
     private String generateVerificationToken(User user){
