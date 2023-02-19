@@ -2,6 +2,7 @@ package com.timecapsule.app.time.capsule.controller;
 
 import com.timecapsule.app.time.capsule.dto.SignupRequest;
 import com.timecapsule.app.time.capsule.service.AuthService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
+@AllArgsConstructor
 public class AuthController {
 
     @Autowired
