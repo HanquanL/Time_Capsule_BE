@@ -20,8 +20,6 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
-    @Autowired
-    private PasswordEncoder encoder; // declare the encoder field
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest){
