@@ -1,5 +1,7 @@
 package com.timecapsule.app.time.capsule.controller;
 
+import com.timecapsule.app.time.capsule.dto.AuthenticationResponse;
+import com.timecapsule.app.time.capsule.dto.LoginRequest;
 import com.timecapsule.app.time.capsule.dto.SignupRequest;
 import com.timecapsule.app.time.capsule.service.AuthService;
 import lombok.AllArgsConstructor;

@@ -1,5 +1,7 @@
 package com.timecapsule.app.time.capsule.service;
 
+import com.timecapsule.app.time.capsule.dto.AuthenticationResponse;
+import com.timecapsule.app.time.capsule.dto.LoginRequest;
 import com.timecapsule.app.time.capsule.dto.SignupRequest;
 import com.timecapsule.app.time.capsule.entity.NotificationEmail;
 import com.timecapsule.app.time.capsule.entity.User;
@@ -9,6 +11,10 @@ import com.timecapsule.app.time.capsule.repository.UserRepository;
 import com.timecapsule.app.time.capsule.repository.VerificationTokenRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +33,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final MailBuilder mailBuilder;
     private final MailService mailService;
+    private final AuthenticationManager authenticationManager;
 
     @Transactional
     public void signup(SignupRequest signupRequest) {
@@ -63,6 +70,15 @@ public class AuthService {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new SpringTimeCapsuleException("User Not Found with id - " + username));
         user.setEnabled(true);
         userRepository.save(user);
+    }
+
+    public AuthenticationResponse login(LoginRequest loginRequest){
+        Authentication authentication = authenticationManager.authenticate(new
+                        UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
+                );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String authenticationToken = jwtProvider.generateToken(authenticate);
+        return new AuthenticationResponse(authenticationToken, loginRequest.getUsername());
     }
 
     private String encodePassword(String password) {
