@@ -34,6 +34,7 @@ public class AuthService {
     private final MailBuilder mailBuilder;
     private final MailService mailService;
     private final AuthenticationManager authenticationManager;
+    private final JwtProvider jwtProvider;
 
     @Transactional
     public void signup(SignupRequest signupRequest) {
