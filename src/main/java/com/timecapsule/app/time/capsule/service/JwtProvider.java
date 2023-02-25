@@ -3,6 +3,7 @@ package com.timecapsule.app.time.capsule.service;
 
 import com.timecapsule.app.time.capsule.exception.SpringTimeCapsuleException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
@@ -32,13 +33,13 @@ public class JwtProvider {
         org.springframework.security.core.userdetails.User principal = (User) authentication.getPrincipal();
         return Jwts.builder()
                 .setSubject(principal.getUsername())
-                .signWith(getPrivateKey())
+                .signWith(SignatureAlgorithm.RS256, getPrivateKey())
                 .compact();
     }
 
     private PrivateKey getPrivateKey(){
         try{
-            return (PrivateKey) keyStore.getKey("timecapsule", "password".toCharArray());
+            return (PrivateKey) keyStore.getKey("mykey", "password".toCharArray());
         }catch (KeyStoreException | NoSuchAlgorithmException | UnrecoverableKeyException e){
             throw new SpringTimeCapsuleException("Exception occured while retrieving public key from keystore");
         }
